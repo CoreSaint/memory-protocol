@@ -15,16 +15,23 @@ This is an installation task, not a request to use the source checkout as live m
 
 ## First: ask me these questions in one message, then wait for my answers
 
-1. What absolute destination directory should contain the independent global memory store?
-2. If that destination already exists, should you stop, or create a timestamped backup before replacing it? Never replace it silently.
+1. What absolute destination directory should contain the independent global memory store? This must be a dedicated directory, not a project checkout or your home directory.
+2. If that destination already exists, which handling do you want? Never replace it silently.
+   - stop — leave the existing destination unchanged and report it.
+   - backup_then_replace — rename the existing memory store to a timestamped sibling, then install the new store.
 3. Which write model should the store use?
-   - propose_then_approve
-   - auto_write_with_git
-   - session_notes_only
-   - read_only
-4. Which initialization depth should be used after the baseline is installed: quick, standard, or deep?
-5. Which project roots are initially in scope? May you inspect prior agent-session history? (Default: no.)
-6. Should host-specific activation be configured now? (Default: no; install the store only.)
+   - propose_then_approve — agents draft memory changes in `inbox/`; promotion requires explicit approval.
+   - auto_write_with_git — agents may update canonical memory and commit focused Git changes.
+   - session_notes_only — agents may record temporary notes, but do not promote canonical memory.
+   - read_only — agents may retrieve memory but must not modify it.
+4. Which initialization depth should be used after the baseline is installed?
+   - quick — scan rules, README, manifests, Git state, and create a minimal project index.
+   - standard — also trace key flows, tests, CI, conventions, and known footguns.
+   - deep — also research history and subsystems; use approved session analysis or subagents when available.
+5. Which project roots are initially in scope? This bounds what the agent may inspect. May it inspect prior agent-session history? (Default: no.)
+6. Should host-specific activation be configured now?
+   - no — install the store only; do not change Pi, Letta, or another host's startup/configuration.
+   - yes — configure the approved host to load the store; explain the exact host change before applying it.
 
 Do not ask questions whose answers can be safely discovered from the destination or selected project roots.
 
