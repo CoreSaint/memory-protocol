@@ -24,7 +24,7 @@ This is an installation task, not a request to use the source checkout as live m
    - auto_write_with_git — agents may update canonical memory and commit focused Git changes.
    - session_notes_only — agents may record temporary notes, but do not promote canonical memory.
    - read_only — agents may retrieve memory but must not modify it.
-4. Which initialization depth should be used after the baseline is installed?
+4. Which initialization depth should be used after the baseline is installed? This controls how much project research the agent performs; it does not change the selected memory write model.
    - quick — scan rules, README, manifests, Git state, and create a minimal project index.
    - standard — also trace key flows, tests, CI, conventions, and known footguns.
    - deep — also research history and subsystems; use approved session analysis or subagents when available.
