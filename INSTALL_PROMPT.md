@@ -15,7 +15,7 @@ This is an installation task, not a request to use the source checkout as live m
 
 ## First: ask me these questions in one message, then wait for my answers
 
-Your first response must present all six questions, every option, and every option description below **verbatim**. Do not summarize, shorten, reword, or omit any explanation. Wait for my complete answers before making filesystem, Git, configuration, or network changes.
+Ask all six sections below in one response, then wait for my complete answers before making filesystem, Git, configuration, or network changes.
 
 === 1. DESTINATION ===
 What absolute destination directory should contain the independent global memory store?
