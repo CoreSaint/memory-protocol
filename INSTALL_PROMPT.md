@@ -15,35 +15,23 @@ This is an installation task, not a request to use the source checkout as live m
 
 ## First: ask me these questions in one message, then wait for my answers
 
-Ask all six sections below in one response, then wait for my complete answers before making filesystem, Git, configuration, or network changes.
-
-=== 1. DESTINATION ===
-What absolute destination directory should contain the independent global memory store?
-It must be a dedicated directory, not a project checkout or your home directory.
-
-=== 2. EXISTING DESTINATION — CHOOSE ONE ===
-[STOP] Replace nothing. Leave the existing destination unchanged and report it.
-[BACKUP_THEN_REPLACE] Rename the existing memory store to a timestamped sibling, then install the new store.
-
-=== 3. WRITE MODEL — CHOOSE ONE ===
-[PROPOSE_THEN_APPROVE] Agents draft memory changes in `inbox/`; promotion requires explicit approval.
-[AUTO_WRITE_WITH_GIT] Agents may update canonical memory and commit focused Git changes.
-[SESSION_NOTES_ONLY] Agents may record temporary notes, but do not promote canonical memory.
-[READ_ONLY] Agents may retrieve memory but must not modify it.
-
-=== 4. INITIALIZATION DEPTH — CHOOSE ONE ===
-This controls how much project research the agent performs; it does not change the selected memory write model.
-[QUICK] Scan rules, README, manifests, Git state, and create a minimal project index.
-[STANDARD] Also trace key flows, tests, CI, conventions, and known footguns.
-[DEEP] Also research history and subsystems; use approved session analysis or subagents when available.
-
-=== 5. PROJECT AND HISTORY SCOPE ===
-Which project roots are initially in scope? This bounds what the agent may inspect.
-May it inspect prior agent-session history? Default: no.
-
-=== 6. HOST ACTIVATION — CHOOSE ONE ===
-[NO] Install the store only; do not change Pi, Letta, or another host's startup/configuration.
-[YES] Configure the approved host to load the store; explain the exact host change before applying it.
+1. What absolute destination directory should contain the independent global memory store? This must be a dedicated directory, not a project checkout or your home directory.
+2. If that destination already exists, which handling do you want? Never replace it silently.
+   - stop — leave the existing destination unchanged and report it.
+   - backup_then_replace — rename the existing memory store to a timestamped sibling, then install the new store.
+3. Which write model should the store use?
+   - propose_then_approve — agents draft memory changes in `inbox/`; promotion requires explicit approval.
+   - auto_write_with_git — agents may update canonical memory and commit focused Git changes.
+   - session_notes_only — agents may record temporary notes, but do not promote canonical memory.
+   - read_only — agents may retrieve memory but must not modify it.
+4. Which initialization depth should be used after the baseline is installed? This controls how much project research the agent performs; it does not change the selected memory write model.
+   - quick — scan rules, README, manifests, Git state, and create a minimal project index.
+   - standard — also trace key flows, tests, CI, conventions, and known footguns.
+   - deep — also research history and subsystems; use approved session analysis or subagents when available.
+5. Which project roots are initially in scope? This bounds what the agent may inspect. May it inspect prior agent-session history? (Default: no.)
+6. Should host-specific activation be configured now?
+   - no — install the store only; do not change Pi, Letta, or another host's startup/configuration.
+   - yes — configure the approved host to load the store; explain the exact host change before applying it.
 
 Do not ask questions whose answers can be safely discovered from the destination or selected project roots.
 
