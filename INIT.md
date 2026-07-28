@@ -33,8 +33,8 @@ Perform standard work, then optionally analyze approved prior sessions, inspect 
 
 ## Common completion checks
 
-- Create a real-name project directory under `system/projects/`, never a generic `project/` directory.
-- Keep `system/` as an index and durable rules; move detailed material to `reference/`.
+- Create a real-name project directory under `projects/`, never a generic `project/` directory.
+- Keep `system/` for global durable rules. Keep project context under `projects/` and detailed material under `reference/`.
 - Add `double-bracket links` from overview files to deeper material.
 - Validate the copied store with `scripts/validate-memory.sh <memory-root>` when available.
 - Under approval policy, leave findings in `inbox/` and request promotion approval.

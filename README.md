@@ -25,6 +25,7 @@ To install a copy with any capable AI agent, paste [INSTALL_PROMPT.md](INSTALL_P
 
 ```text
 system/       compact bootstrap context and policy
+projects/     on-demand project indexes, conventions, and project-specific memory
 reference/    detailed, on-demand knowledge
 skills/       versioned reusable procedures
 inbox/        proposals awaiting review (for approval-based policies)

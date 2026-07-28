@@ -46,7 +46,7 @@ Do not ask questions whose answers can be safely discovered from the destination
 5. Build and validate the new store in a temporary sibling staging directory. Do not touch the requested destination while staging.
 6. Copy the memory-template content into staging, excluding source-only and machine-local material:
    - exclude `.git/`, `.letta/`, `INSTALL_PROMPT.md`, this source `README.md`, and this source `AGENTS.md`;
-   - include `.gitignore`, `AGENT_MEMORY.md`, `ADAPTERS.md`, `DOCTOR.md`, `DREAM.md`, `HISTORY_INGEST.md`, `INIT.md`, `system/`, `reference/`, `skills/`, `inbox/`, `shared/`, `templates/`, and `scripts/validate-memory.sh`;
+   - include `.gitignore`, `AGENT_MEMORY.md`, `ADAPTERS.md`, `DOCTOR.md`, `DREAM.md`, `HISTORY_INGEST.md`, `INIT.md`, `system/`, `projects/`, `reference/`, `skills/`, `inbox/`, `shared/`, `templates/`, and `scripts/validate-memory.sh`;
    - create the staging `README.md` with exactly the text between `BEGIN README.md` and `END README.md`, without the marker lines or any leading presentation indentation:
 
 BEGIN README.md

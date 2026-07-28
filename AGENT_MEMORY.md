@@ -10,8 +10,9 @@ description: Universal bootstrap and operating contract for agents using a memor
 2. Read `system/overview.md`, then every file it explicitly identifies as always-read.
 3. Read `system/memory-policy.md` and apply its selected write model.
 4. Read relevant project-local instructions before using memory to change that project.
-5. Discover detailed knowledge through paths, descriptions, and `double-bracket links`; do not bulk-load `reference/`.
-6. Check `git status --short` before proposing or making memory edits.
+5. Identify the relevant project from the task or working directory, then load its `projects/<project-name>/overview.md` when it exists.
+6. Discover detailed knowledge through paths, descriptions, and `double-bracket links`; do not bulk-load `projects/` or `reference/`.
+7. Check `git status --short` before proposing or making memory edits.
 
 If the memory root, required bootstrap files, or policy are missing, say so and operate without pretending that memory was loaded. Do not create a new live store unless the user explicitly requests initialization.
 

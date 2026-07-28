@@ -1,5 +1,5 @@
 ---
-description: Template for a compact always-read project memory index.
+description: Template for a compact on-demand project memory index.
 ---
 
 ---
@@ -16,4 +16,4 @@ description: Compact index of verified project entry points, rules, and links to
 Links:
 
 - `[[reference/projects/project-name/architecture.md]]`
-- `[[system/projects/project-name/conventions.md]]`
+- `[[projects/project-name/conventions.md]]`
