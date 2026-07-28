@@ -15,6 +15,8 @@ This is an installation task, not a request to use the source checkout as live m
 
 ## First: ask me these questions in one message, then wait for my answers
 
+Reproduce all six questions and every option below exactly as written, including each option's explanatory description. Do not summarize, paraphrase, abbreviate, or omit any text. Ask them together in one message, then wait for my answers. Make the option values stand out.
+
 1. What absolute destination directory should contain the independent global memory store? This must be a dedicated directory, not a project checkout or your home directory.
 2. If that destination already exists, which handling do you want? Never replace it silently.
    - stop — leave the existing destination unchanged and report it.
