@@ -10,14 +10,15 @@ The installer is intentionally conservative:
 
 - requires an explicit destination whose parent already exists;
 - refuses an existing destination unless `--backup-existing` is selected;
-- copies no `.git` or `.letta` metadata from the source;
+- copies only committed source content; ignored and untracked files never enter the store;
 - initializes an independent local Git repository with no remote;
 - validates the installed memory tree before it becomes active;
 - does not configure an agent host, inspect history, create schedules, or access a network.
+- isolates Git configuration and disables hooks/signing during the initial commit.
 
 ## Prerequisites
 
-- Bash, Git, Python 3, and `tar`.
+- Bash, Git, Python 3, `tar`, `find`, `grep`, `sed`, `awk`, `mktemp`, and standard file utilities.
 - A local checkout of this repository. Clone it using the access method appropriate for the private repository; do not place credentials in this repository or in command history.
 
 ## Install
@@ -49,12 +50,12 @@ scripts/install.sh --destination ~/.local/share/agent-memory --backup-existing
 
 1. Review `<destination>/system/memory-policy.md`.
 2. Direct a dedicated agent to read `<destination>/AGENT_MEMORY.md` before any work.
-3. Ask that agent to run the `INIT.md` process and choose quick, standard, or deep research. It must ask before reading prior-session history.
+3. Ask that agent to run the selected-depth `INIT.md` process. It must retain the already selected write model and ask before reading prior-session history. With `read_only`, it can only inspect and report; with `session_notes_only`, it cannot create canonical project memory.
 4. Configure a **host-specific adapter** only after this baseline is working. See [ADAPTERS.md](ADAPTERS.md).
 
 For a generic installation agent, provide this instruction:
 
-> Use `<destination>` as the independent global memory store. Read `AGENT_MEMORY.md` and follow its bootstrap rules before work. Follow `system/memory-policy.md`; do not modify the source template, configure remotes, create global hooks, or inspect history without my approval.
+> Use `<destination>` as the independent global memory store. Read `AGENT_MEMORY.md` and follow its bootstrap rules before work. Retain the selected `system/memory-policy.md`; do not re-run installation, configure remotes, create global hooks, or inspect history without my approval.
 
 ## Letta-specific caution
 

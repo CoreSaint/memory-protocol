@@ -62,7 +62,10 @@ while IFS= read -r -d '' file; do
   done < <(grep -oE '\[\[[^]|]+(\|[^]]+)?\]\]' "$file" | sed -E 's/^\[\[//; s/\]\]$//; s/\|.*$//')
 done < <(find "$root" -type f -name '*.md' -not -path "$root/templates/*" -print0)
 
-system_bytes=$(find "$root/system" -type f -name '*.md' -printf '%s\n' 2>/dev/null | awk '{sum += $1} END {print sum + 0}')
+system_bytes=0
+while IFS= read -r -d '' system_file; do
+  system_bytes=$((system_bytes + $(wc -c < "$system_file")))
+done < <(find "$root/system" -type f -name '*.md' -print0)
 if (( system_bytes > 49152 )); then
   fail "system/ is ${system_bytes} bytes; move detailed material to reference/"
 fi
