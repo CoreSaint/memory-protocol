@@ -6,7 +6,7 @@ description: Project overview and adoption guide for the portable agent-memory p
 
 An inactive, Git-backed Markdown template for giving any capable coding agent durable, auditable memory. It mirrors Letta's memory model without requiring Letta: compact always-read memory, progressive reference memory, reusable skills, Git history, shared-memory boundaries, initialization, reflection, and health checks.
 
-This repository is a **template**, not an installed global memory store. Do not place personal, project, or secret data here. A future installer must copy it to an explicit destination and initialize that copy as a Git repository.
+This repository is a **template**, not an installed global memory store. Do not place personal, project, or secret data here. A dedicated installation agent must copy it to an explicit destination and initialize that copy as a Git repository.
 
 ## Core contract
 
@@ -19,7 +19,7 @@ This repository is a **template**, not an installed global memory store. Do not 
 
 Read [AGENT_MEMORY.md](AGENT_MEMORY.md) for the universal agent procedure, then [INIT.md](INIT.md) for first-time setup.
 
-To create an independent global store from this template, follow [INSTALL.md](INSTALL.md).
+To install a copy with any capable AI agent, paste [INSTALL_PROMPT.md](INSTALL_PROMPT.md) into its chat. The agent asks essential questions and performs the approved installation; this repository deliberately ships no shell installer.
 
 ## Layout
 

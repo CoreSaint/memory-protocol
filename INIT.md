@@ -15,6 +15,8 @@ Ask only facts that cannot be safely discovered:
 3. Is prior-session history available and approved for analysis?
 4. Which repositories or project roots are in scope?
 
+When an approved installation handoff already supplied any of these answers, reuse it rather than asking again. Ask only for a required value that remains unknown.
+
 Persist the selected model in `system/memory-policy.md` only under the chosen policy. For `read_only`, report the required change rather than writing it.
 
 ## Quick scan
