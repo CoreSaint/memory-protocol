@@ -19,6 +19,8 @@ This repository is a **template**, not an installed global memory store. Do not 
 
 Read [AGENT_MEMORY.md](AGENT_MEMORY.md) for the universal agent procedure, then [INIT.md](INIT.md) for first-time setup.
 
+To create an independent global store from this template, follow [INSTALL.md](INSTALL.md).
+
 ## Layout
 
 ```text
