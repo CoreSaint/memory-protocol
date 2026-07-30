@@ -15,6 +15,12 @@ require_file() {
   [[ -f "$root/$1" ]] || fail "required file missing: $1"
 }
 
+find_managed_markdown() {
+  find "$root" \
+    \( -path "$root/.git" -o -path "$root/.letta" \) -prune -o \
+    -type f -name '*.md' -print0
+}
+
 require_file system/overview.md
 require_file system/persona.md
 require_file system/memory-policy.md
@@ -33,14 +39,14 @@ while IFS= read -r -d '' file; do
   elif ! sed -n '2,/^---$/p' "$file" | grep -qE '^description: .+'; then
     fail "Markdown lacks non-empty description: $rel"
   fi
-done < <(find "$root" -type f -name '*.md' -print0)
+done < <(find_managed_markdown)
 
 while IFS= read -r -d '' file; do
   stem=${file%.md}
   if [[ -d "$stem" ]]; then
     fail "file/directory conflict: ${file#"$root/"} conflicts with ${stem#"$root/"}/"
   fi
-done < <(find "$root" -type f -name '*.md' -print0)
+done < <(find_managed_markdown)
 
 policy="$root/system/memory-policy.md"
 if [[ -f "$policy" ]] && ! grep -qE '^write_model: (propose_then_approve|auto_write_with_git|session_notes_only|read_only)$' "$policy"; then
@@ -60,7 +66,7 @@ while IFS= read -r -d '' file; do
       fail "broken wiki link: $rel -> $target"
     fi
   done < <(grep -oE '\[\[[^]|]+(\|[^]]+)?\]\]' "$file" | sed -E 's/^\[\[//; s/\]\]$//; s/\|.*$//')
-done < <(find "$root" -type f -name '*.md' -not -path "$root/templates/*" -print0)
+done < <(find_managed_markdown)
 
 system_bytes=0
 while IFS= read -r -d '' system_file; do

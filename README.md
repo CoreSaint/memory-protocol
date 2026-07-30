@@ -41,10 +41,11 @@ Hosts such as Letta may inject `system/` into every prompt. Generic agents canno
 ## Validation
 
 ```sh
+scripts/test-validate-memory.sh
 scripts/validate-memory.sh .
 ```
 
-The script checks structural invariants only; it does not evaluate truth, retrieve external state, or modify memory.
+The validator checks structural invariants only; it does not evaluate truth, retrieve external state, or modify memory. Machine-local `.git/` and `.letta/` runtime trees are outside its managed Markdown surface.
 
 ## Related Letta concepts
 
