@@ -1,9 +1,10 @@
 ---
-name: example-skill
-description: Template for a portable, reusable agent procedure.
+description: Template instructions for creating a portable reusable skill artifact.
 ---
 
-# Example skill
+# Skill template
+
+Copy this file to `skills/<skill-name>/SKILL.md`, then replace its frontmatter with exactly `name: <skill-name>` and one non-empty `description`.
 
 ## When to use
 

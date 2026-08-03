@@ -4,49 +4,45 @@ description: Project overview and adoption guide for the portable agent-memory p
 
 # Memory Protocol
 
-An inactive, Git-backed Markdown template for giving any capable coding agent durable, auditable memory. It mirrors Letta's memory model without requiring Letta: compact always-read memory, progressive reference memory, reusable skills, Git history, shared-memory boundaries, initialization, reflection, and health checks.
+An inactive Git-backed Markdown template for portable, auditable agent memory. It implements the artifact and safe-lifecycle parts of Letta MemFS while keeping runtime behavior explicit. It is a **MemFS-compatible portable repository**, not a MemFS-equivalent runtime.
 
-This repository is a **template**, not an installed global memory store. Do not place personal, project, or secret data here. A dedicated installation agent must copy it to an explicit destination and initialize that copy as a Git repository.
+This repository is a template, not an installed store. Do not place personal, project, or secret data here. Installation copies an approved allowlist into an independent Git repository.
 
-## Core contract
+## Portable core
 
-- Markdown committed to Git is the only durable authority.
-- `system/` is compact bootstrap context. Agents must read `system/overview.md` before work.
-- Other content is progressive memory: discover it from the tree and links; load it only when relevant.
-- Every managed memory Markdown file has YAML frontmatter with a non-empty `description`.
-- `system/memory-policy.md` selects the write model. Agents must obey it.
-- Never store credentials, access tokens, private keys, or copied secret values.
+- Committed Markdown in `system/`, `projects/`, `reference/`, and `skills/` is canonical private-memory authority; committed inbox artifacts and protocol metadata remain non-canonical.
+- Generic agents explicitly follow [AGENT_MEMORY.md](AGENT_MEMORY.md); directory placement alone never injects a prompt.
+- `system/` is compact bootstrap context. Other managed roots are progressively discovered.
+- Every managed Markdown file has strict description frontmatter.
+- Literal committed-`HEAD` search is the baseline; QMD is an optional derived overlay.
+- Conversation stores, schedules, cloud sync, native injection, and repository attachment require declared adapters.
 
-Read [AGENT_MEMORY.md](AGENT_MEMORY.md) for the universal agent procedure, then [INIT.md](INIT.md) for first-time setup.
-
-To install a copy with any capable AI agent, paste [INSTALL_PROMPT.md](INSTALL_PROMPT.md) into its chat. The agent asks essential questions and performs the approved installation; this repository deliberately ships no shell installer.
+Profiles and adapter overlays are defined in [CAPABILITIES.md](CAPABILITIES.md). Exact Letta correspondence and non-goals are in [MEMFS_COMPATIBILITY.md](MEMFS_COMPATIBILITY.md).
 
 ## Layout
 
 ```text
-system/       compact bootstrap context and policy
-projects/     on-demand project indexes, conventions, and project-specific memory
-reference/    detailed, on-demand knowledge
-skills/       versioned reusable procedures
-inbox/        proposals awaiting review (for approval-based policies)
-shared/       attachment contract for a separate shared-memory repository
-templates/    copyable file templates
-scripts/      optional local validators; never required by the protocol
+system/       compact context explicitly loaded by bootstrap or a declared native adapter
+projects/     on-demand project indexes and project-specific memory
+reference/    detailed on-demand knowledge
+skills/       portable reusable procedures
+inbox/        non-canonical proposals and temporary session notes
+shared/       descriptors for independent shared Git repositories
+attachments/  (under shared/) credential-free repository declarations
+templates/    copyable managed-document templates
+scripts/      optional structural validation and regression tests
 ```
 
-## Portability boundary
-
-Hosts such as Letta may inject `system/` into every prompt. Generic agents cannot assume that capability. Their adapter, launch instruction, or repository rule must instead require the bootstrap read defined in [AGENT_MEMORY.md](AGENT_MEMORY.md). Native integrations may add automatic injection but must not change the Markdown authority model.
+Read [SEARCH.md](SEARCH.md), [WORKTREES.md](WORKTREES.md), and [SYNC.md](SYNC.md) for retrieval, isolated edits, and sync/backup distinctions. Shared Git repositories are not Letta shared memory blocks.
 
 ## Validation
 
 ```sh
 scripts/test-validate-memory.sh
 scripts/validate-memory.sh .
+scripts/validate-memory.sh --profile template .
 ```
 
-The validator checks structural invariants only; it does not evaluate truth, retrieve external state, or modify memory. Machine-local `.git/` and `.letta/` runtime trees are outside its managed Markdown surface.
+The optional validator is offline, deterministic, read-only with respect to the store, and profile-aware. It accepts a deliberately small YAML subset: plain descriptions begin with a letter, while descriptions beginning with other characters must be quoted. It scans the repository for Markdown and accepts it only in declared managed roots/root documents, ignoring exactly `.git/`, `.letta/`, and source-runtime `.pi-subagents/`. It requires Bash 4+, Git, `find`, GNU `sort` with `-z`, `awk`, `wc`, `mktemp`, and `rm`. The development regression script assumes GNU userland behavior for `sort -z`, `sed -i`, `dd status=none`, and `sha256sum`, and additionally uses `cp`, `grep`, `cmp`, `tr`, `xargs`, and `readlink`. Preflight these tools and fail without validation if they are unavailable.
 
-## Related Letta concepts
-
-The design is based on Letta's documented MemFS and memory lifecycle: https://docs.letta.com/concepts/memfs/index.md and https://docs.letta.com/configuration/memory/index.md.
+The portable core itself needs only filesystem access and Git; scripts are optional except in the documented guided installation, which preflights and requires the validator. To install an independent store with a capable agent, use [INSTALL_PROMPT.md](INSTALL_PROMPT.md). Installation does not configure QMD, Letta, remotes, schedules, cloud services, or attachments.

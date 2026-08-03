@@ -10,4 +10,4 @@ description: Contribution rules for agents modifying this portable template repo
 - Every Markdown file that is part of the managed memory tree must have YAML frontmatter with a non-empty `description`.
 - Do not add secrets, personal user facts, or machine-specific paths.
 - Do not claim that generic agents receive automatic system-prompt injection. They must follow the bootstrap read in `AGENT_MEMORY.md` unless a native adapter provides injection.
-- Run `scripts/test-validate-memory.sh` and `scripts/validate-memory.sh .` after validator or structural changes. Validation must ignore machine-local `.git/` and `.letta/` runtime trees.
+- Run `scripts/test-validate-memory.sh`, `scripts/validate-memory.sh .`, and `scripts/validate-memory.sh --profile template .` after validator or structural changes. Validation ignores only machine-local `.git/`, `.letta/`, and source-runtime `.pi-subagents/` trees; arbitrary hidden Markdown remains managed and visible.

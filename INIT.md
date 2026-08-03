@@ -1,40 +1,40 @@
 ---
-description: Three-depth initialization procedure for creating a project memory baseline in a copied memory store.
+description: Capability-aware three-depth initialization procedure for a copied memory store.
 ---
 
 # Initialization protocol
 
-`/init` is a host command or natural-language trigger; this document defines its portable behavior. It never installs this source repository in place.
+`/init` is a host trigger or natural-language request. It operates on an installed copy, never this source template, and installs no dependencies.
 
-## Required opening questions
+## Opening decisions
 
-Ask only facts that cannot be safely discovered:
+Ask only unknown facts that cannot be discovered safely:
 
-1. Which depth: `quick`, `standard`, or `deep`?
-2. Which write model: `propose_then_approve`, `auto_write_with_git`, `session_notes_only`, or `read_only`?
-3. Is prior-session history available and approved for analysis?
-4. Which repositories or project roots are in scope?
+1. depth: `quick`, `standard`, or `deep`;
+2. write model: `propose_then_approve`, `auto_write_with_git`, `session_notes_only`, or `read_only`;
+3. whether prior-session history is available and explicitly approved, including bounds;
+4. repositories/project roots in scope.
 
-When an approved installation handoff already supplied any of these answers, reuse it rather than asking again. Ask only for a required value that remains unknown.
+Reuse approved installation answers. The currently committed model remains effective throughout initialization unless the owner explicitly decides to change it and authorizes the transition below.
 
-Persist the selected model in `system/memory-policy.md` only under the chosen policy. For `read_only`, report the required change rather than writing it.
+## Write-model transition
 
-## Quick scan
+An explicit owner decision selecting a different model authorizes exactly one focused transition: edit only `system/memory-policy.md`, validate the store, and commit that policy-only change. The new model applies only after that commit succeeds. Do not bundle initialization findings, proposals, session notes, or canonical edits into the transition commit. If there is no explicit decision, validation fails, or the commit cannot be created, retain the old policy unchanged.
 
-Read local agent instructions, README files, manifests, top-level layout, Git status, and recent commits. Create or propose only a compact project index with verified entry points and links. Do not infer architecture from filenames.
+This narrow authorization is also the only safe way to leave `read_only`: until the policy-only commit succeeds, perform no other memory write. When entering `read_only`, finish no unrelated write in the same commit; once the policy-only commit succeeds, stop all memory creation, editing, staging, and committing. During guided installation, the approved installation answer is applied before the initial baseline commit as specified by [INSTALL_PROMPT.md](INSTALL_PROMPT.md), so it is not a later live-store transition.
 
-## Standard research
+## Capability detection
 
-Perform quick scan work, then inspect key entry points, trace one important flow, read representative tests, and inspect CI/build configuration. Capture concrete commands, conventions, hard boundaries, and known footguns in focused files. Use shell search when available.
+After scope and policy are known, detect filesystem/Git and report `portable-core`. Without installing or configuring anything, preflight optional validator, remote/worktree support, QMD provider, conversation provider/modes, scheduler, cloud sync, injection, and repository attachments. Select the strongest safe additive profile actually available and declare every overlay per [ADAPTERS.md](ADAPTERS.md). Missing capabilities degrade explicitly; they never simulate success or alter the write model.
 
-## Deep research
+## Research depths
 
-Perform standard work, then optionally analyze approved prior sessions, inspect history and major subsystems, and delegate independent subsystem exploration to subagents when available. Synthesize specific findings into linked reference files. Do not let subagents concurrently edit the same canonical file; collect their proposals first.
+- **Quick:** read local instructions, README/manifests, top-level layout, Git status, and recent commits. Create/propose only a compact verified project index.
+- **Standard:** also inspect key entry points, trace one important flow, representative tests, and CI/build configuration. Capture concrete commands and boundaries.
+- **Deep:** also inspect approved history and major subsystems; optional subagents may explore independent scopes. Collect proposals before any shared canonical edit.
 
-## Common completion checks
+History is never accessed without explicit consent. QMD, schedules, remotes, native activation, and attachments are never installed/configured merely because they are detectable.
 
-- Create a real-name project directory under `projects/`, never a generic `project/` directory.
-- Keep `system/` for global durable rules. Keep project context under `projects/` and detailed material under `reference/`.
-- Add `double-bracket links` from overview files to deeper material.
-- Validate the copied store with `scripts/validate-memory.sh <memory-root>` when available.
-- Under approval policy, leave findings in `inbox/` and request promotion approval.
+## Completion
+
+Use a real project directory under `projects/`. Keep global compact rules in `system/` and detail in progressive roots. Add root-relative wiki links. Follow the write policy, validate with `scripts/validate-memory.sh --profile installed <root>` when available, and report active profiles, capability statuses/fallbacks, files/proposals, validation, and commit/sync/backup states separately.

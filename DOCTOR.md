@@ -1,20 +1,32 @@
 ---
-description: Read-only memory health audit and repair-planning procedure.
+description: Read-only memory health audit and policy-gated repair procedure.
 ---
 
 # Memory doctor
 
-Run this audit when bootstrap context has become noisy, duplicated, stale, structurally invalid, or difficult to retrieve.
+Doctor audits are read-only by default. A repair is a separate operation requiring the active write policy to authorize it; use [WORKTREES.md](WORKTREES.md) when isolating an authorized repair.
 
-## Inspect
+## Stable severities
 
-1. Run the structural validator.
-2. Measure `system/` files and identify material that does not influence ordinary work.
-3. Identify duplicate facts, broken links, stale project indexes, generic dumping-ground files, and files lacking concrete provenance.
-4. Review uncommitted changes and pending `inbox/` proposals separately from canonical memory.
+- `error`: structural, authority, safety, or validation failure requiring correction.
+- `warning`: likely retrieval, freshness, duplication, or lifecycle problem needing review.
+- `info`: bounded observation or optional improvement.
 
-## Repair proposal
+## Audit checks
 
-Produce a plan that names every affected file, explains why each move or merge preserves meaning, and identifies links to update. Prefer splitting by topic and moving detail out of `system/`; never silently discard information.
+Run checks in stable path order and record evidence:
 
-Apply repairs only as permitted by `system/memory-policy.md`. A doctor run is read-only by default and should not invent missing facts.
+1. profile-aware structural validation and managed symlinks/placement;
+2. `system/` size as a portable bootstrap guard, plus content that does not influence ordinary work;
+3. broken/malformed links and weak progressive navigation;
+4. duplicated or contradictory facts;
+5. stale project indexes and provenance, distinguishing unchecked from verified stale facts;
+6. attachment descriptor structure, checkout availability, resolved commit, and optional network reachability only when separately approved;
+7. parent Git status, branch/commit, remotes, and preserved worktrees;
+8. pending proposals, approval states, and deduplication keys.
+
+Use [templates/doctor-report.md](templates/doctor-report.md). Do not invent missing facts or treat unavailable external checks as proof of failure.
+
+## Repair lifecycle
+
+Name each affected file and explain why the change preserves meaning. Prefer moving detail out of `system/`, splitting by topic, and updating links. Before mutation, re-check policy and parent status. For worktree repairs, record the base, validate and commit focused worker changes, and permit only the safe fast-forward lifecycle in `WORKTREES.md`. Dirty, advanced, conflicting, or invalid work is preserved for manual resolution—never stashed, reset, cleaned, forced, or discarded.

@@ -1,30 +1,44 @@
 ---
-description: Integration guidance for making the portable protocol available to different agent hosts without changing memory authority.
+description: Testable host-adapter declaration and runtime responsibility contract.
 ---
 
 # Host adapters
 
-An adapter exposes this protocol to a host; it does not become a second memory authority. It must point the host at one explicit memory root and preserve Git-backed Markdown as canonical state.
+An adapter exposes one explicit memory root while preserving committed Markdown in `system/`, `projects/`, `reference/`, and `skills/` as the canonical private-memory corpus. A minimum generic adapter supplies the root and directs the agent to read `AGENT_MEMORY.md`; it cannot claim prompt injection.
 
-## Minimum adapter
+## Required declaration
 
-A minimal adapter supplies the memory-root path and a startup instruction equivalent to:
+An adapter must report, in inspectable text or machine-readable configuration:
 
-> Read `<memory-root>/AGENT_MEMORY.md`, then complete its bootstrap procedure before work.
+- resolved memory root;
+- active portable profile: `portable-core`, optional `portable-workflow`, and optional `qmd-search`;
+- every capability overlay as `supported`, `unsupported`, or `unavailable`;
+- bootstrap method and attestation (`explicit_read` or a named native injection implementation);
+- durable-memory search providers and indexed commit when applicable;
+- conversation provider and independently supported keyword/semantic/hybrid modes;
+- attachment mechanism;
+- safe-worktree support;
+- sync/backup mechanism;
+- unavailable features and fallback behavior.
 
-Filesystem and Git access are sufficient. If those are unavailable, the adapter must state that durable memory cannot be used rather than simulating it.
+A declaration is testable only when a reviewer can compare each claim with configuration/preflight output without exercising unrelated services. Host activation must not silently change `system/memory-policy.md`.
 
-## Optional capabilities
+## Runtime-owned responsibilities
 
-| Capability | Portable behavior |
-| --- | --- |
-| System-prompt injection | Inject only the compact `system/` tree; still retain bootstrap checks and Git authority. |
-| Shell/search | Use for `INIT.md` standard/deep research and validation; never make them a prerequisite for quick scan. |
-| Subagents | Partition research or reflection by independent scope; collect proposals before canonical edits. |
-| Schedules | Invoke `DREAM.md` only with a user-approved cadence and consented session scope. |
-| Session stores | Follow `HISTORY_INGEST.md`; require explicit consent before reading them. |
-| Worktrees | Isolate concurrent doctor/reflection edits, then combine reviewed changes. |
+Adapters, not the repository format, own:
 
-## Native hosts
+- injection ordering/limits and post-commit recompilation timing;
+- QMD CLI preflight, exact four-root canonical-corpus snapshot indexing, refresh, and external index storage;
+- conversation authorization, bounded queries, provider identity, and source pointers;
+- schedule triggers, transcript cursors/watermarks, and model execution;
+- cloud identity, authentication, retries, directionality, offline behavior, and conflict recovery;
+- attachment APIs, checkout location, credentials, access control, and resolved-commit reporting;
+- remote configuration and sync reporting.
 
-A Letta adapter may map the root to MemFS and map `system/` to native always-on memory. Other hosts may point their native instruction file or launcher at `AGENT_MEMORY.md`. These integrations are conveniences only: no adapter may silently change `system/memory-policy.md` or write outside its selected model.
+Derived indexes, caches, transcript cursors, schedules, and cloud/runtime state may live outside the repository but never become canonical memory.
+
+## Failure behavior
+
+When a capability is absent, denied, stale, offline, or fails preflight, report it as unavailable and use only an explicitly documented fallback. Do not simulate injection, QMD results, conversation access, attachment, sync, or scheduling success. Filesystem and Git alone satisfy `portable-core`; if they are unavailable, durable memory is unavailable.
+
+A Letta adapter may implement native overlays, but must declare them individually. Being a Letta host does not itself prove prompt injection, cloud sync, session search, dreaming, or repository attachment.

@@ -1,25 +1,28 @@
 ---
-description: Template for a reviewable proposal to promote a durable memory change.
----
-
----
-description: Reviewable proposal for a possible durable memory update.
-status: pending_approval
+description: Template for an auditable proposal to promote one durable memory change.
 ---
 
 # Proposal: concise title
 
-- Target: `system/` or `reference/` path
-- Source: observation, user statement, approved session range, or verified file path
-- Why durable: explain recurrence or future value
+Copy to `inbox/proposals/<focused-id>.md` where practical. Existing stores may retain legacy direct-`inbox/` proposals; placement never makes a proposal canonical.
+
+- Operation: add | update | move | remove
+- Target: `system/`, `projects/`, `reference/`, or `skills/` path
+- Source kind: observation | user statement | approved conversation | verified repository
+- Source pointer: bounded path, provider reference, or hash
+- Observed range: date, commit, or approved message range
+- Scope: exact subject and exclusions
 - Confidence: observed | user-confirmed | inferred
+- Deduplication key: stable operation/target/source identifier
+- Approval state: pending | approved | rejected | promoted
+- Why durable: recurrence or future value
 
 ## Proposed change
 
 ```markdown
-Exact text to add, replace, or remove.
+Exact text to add, replace, move, or remove.
 ```
 
-## Approval
+## Review
 
-Awaiting explicit approval.
+Record approval and promotion evidence here. A body state change is not itself canonical promotion.
